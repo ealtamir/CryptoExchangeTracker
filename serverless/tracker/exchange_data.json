@@ -1,0 +1,26 @@
+[
+  {
+    "exchange_name": "Bitfinex",
+    "ticker_url": "https://api.bitfinex.com/v1/pubticker",
+    "available_symbols": [
+      {"symbol": "btcusd", "name": "Bitcoin"},
+      {"symbol": "ltcusd", "name": "Litecoin"},
+      {"symbol": "ethusd", "name": "Ethereum"},
+      {"symbol": "etcusd", "name": "Ethereum Classic"},
+      {"symbol": "zecusd", "name": "ZCash"},
+      {"symbol": "xmrusd", "name": "Monero"},
+      {"symbol": "dshusd", "name": "Dash"},
+      {"symbol": "xrpusd", "name": "Ripple"},
+      {"symbol": "iotusd", "name": "IOTA"},
+      {"symbol": "eosusd", "name": "EOS"},
+      {"symbol": "sanusd", "name": "Santiment"},
+      {"symbol": "omgusd", "name": "OmiseGO"},
+      {"symbol": "bchusd", "name": "Bitcoin Cash"},
+      {"symbol": "neousd", "name": "NEO"},
+      {"symbol": "etpusd", "name": "ETP"},
+      {"symbol": "qtmusd", "name": "QTUM"},
+      {"symbol": "avtusd", "name": "Aventus"},
+      {"symbol": "edousd", "name": "EDO"}
+    ]
+  }
+]
