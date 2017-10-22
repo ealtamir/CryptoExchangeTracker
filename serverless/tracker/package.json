@@ -1,8 +1,8 @@
 {
-  "name": "bitfinex_price_tracker",
+  "name": "tracker",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "handler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,11 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "async": "^2.5.0",
+    "lodash": "^4.17.4",
     "request": "^2.83.0"
-  },
-  "devDependencies": {
-    "serverless-dynamodb-local": "^0.2.26",
-    "serverless-offline": "^3.16.0",
-    "serverless-offline-scheduler": "^0.3.3"
   }
 }

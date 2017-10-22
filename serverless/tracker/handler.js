@@ -6,11 +6,9 @@ const fs = require('fs');
 const AWS = require('aws-sdk');
 const request = require('request');
 
-const MAX_RETRIES = 3;
-
-if (env.ENVIRONMENT === 'DEBUG') {
+if (env.stage === 'DEVELOPMENT') {
   AWS.config.update({
-    region: env.AWS_REGION || 'localhost',
+    region: 'localhost',
     endpoint: 'http://localhost:8000'
   });
 }
@@ -24,7 +22,6 @@ module.exports.bitfinex_tracker = (event, context, callback) => {
     const trackerLinks = _.map(exchangeData['available_symbols'], (symbolObj) => {
       return function(cb) {
         const url = exchangeData.ticker_url + '/' + symbolObj.symbol;
-        console.log(url)
         request(url, (err, resp, body) => {
           if (err || (resp && resp.statusCode !== 200)) {
             return cb(err, null)
@@ -36,8 +33,7 @@ module.exports.bitfinex_tracker = (event, context, callback) => {
     });
     as.parallel(trackerLinks, (err, results) => {
       if (err) {
-        console.log(`Failed to fetch data from exchange: ${JSON.stringify(err)}`);
-        return callback(null, {statusCode: 400})
+        return console.log(`Failed to fetch data from exchange: ${JSON.stringify(err)}`);
       }
       const timestamp = +new Date();
       const exchange = exchangeData.exchange_name;
@@ -50,11 +46,9 @@ module.exports.bitfinex_tracker = (event, context, callback) => {
           data: results
         }
       }
-      console.log(params)
       dynamodb.put(params, (err, data) => {
         if (err) {
-          console.log(`Failed to store data in dynamodb: ${JSON.stringify(err)}`);
-          return callback(null, {statusCode: 400})
+          return console.log(`Failed to store data in dynamodb: ${JSON.stringify(err)}`);
         }
         const response = {
           statusCode: 200,
@@ -63,8 +57,7 @@ module.exports.bitfinex_tracker = (event, context, callback) => {
             data: data
           }),
         };
-        callback(null, response);
-        return console.log(JSON.stringify(data));
+        return console.log(`Stored data to dynamodb successfully at ${timestamp}`);
       })
     });
   })

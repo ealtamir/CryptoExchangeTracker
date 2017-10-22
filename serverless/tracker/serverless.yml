@@ -25,6 +25,8 @@ provider:
     dynamodbApiVersion: '2012-08-10'
     data: 'exchange_data.json'
     region: ${self:provider.region}
+    stage: ${opt:stage, 'DEVELOPMENT'}
+
 
 # you can overwrite defaults here
 #  stage: dev
@@ -62,12 +64,12 @@ provider:
 functions:
   main:
     handler: handler.bitfinex_tracker
+    role: arn:aws:iam::041963870207:role/ticker-tracker
+    memorysize: 128
     environment:
       tableName: ${self:resources.Resources.tickerTable.Properties.TableName}
     events:
-      - http:
-          path: /
-          method: get
+      - schedule: rate(1 minute)
 
 resources:
   Resources:
@@ -128,3 +130,4 @@ resources:
 plugins:
   - serverless-offline
   - serverless-dynamodb-local
+  - serverless-offline-scheduler
